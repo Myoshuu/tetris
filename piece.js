@@ -1,7 +1,7 @@
 class Piece {
   constructor(shape) {
     this.shape = shape
-    this.ctx = this.ctx
+    this.ctx = ctx
     this.x = 0
     this.y = Math.random(COLS / 2)
   }

@@ -22,10 +22,8 @@ class GameModel {
     for (let i = 0; i < n; i++) {
       for (let j = 0; j < n; j++) {
         if (shape[i][j] > 0) {
-          let p = Math.floor(x + j)
-          let q = Math.floor(y + i)
-
-
+          let p = Math.round(x + j)
+          let q = Math.round(y + i)
 
           if (p >= 0 && p < COLS && q < ROWS) {
             if (this.grid[q][p] > 0) {
@@ -43,7 +41,7 @@ class GameModel {
 
   renderGameState() {
     for (let i = 0; i < this.grid.length; i++) {
-      for (let j = 0; j < this.grid.length;) {
+      for (let j = 0; j < this.grid[i].length; j++) {
         let cell = this.grid[i][j]
         this.ctx.fillStyle = COLORS[cell]
         this.ctx.fillRect(j, i, 1, 1)
@@ -64,12 +62,15 @@ class GameModel {
       const shape = this.fallingPiece.shape
       const x = this.fallingPiece.x
       const y = this.fallingPiece.y
-      SVGPathElement.map((row, i) => {
-        let p = x + j
-        let q = y + i
-        if (p >= 0 && p < COLS && q < ROWS && cell > 0) {
-          this.grid[q][p] = shape[i][j]
-        }
+      shape.map((row, i) => {
+        row.map((cell, j) => {
+          let p = x + j
+          let q = y + i
+
+          if (p >= 0 && p < COLS && q < ROWS && cell > 0) {
+            this.grid[q][p] = shape[i][j]
+          }
+        })
       })
 
       // check gameover
